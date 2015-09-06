@@ -1,0 +1,69 @@
+import java.util.*;
+
+public class Huffman {
+    // Se compone un arreglo de las frecuencias respectivas a los caracteres
+    public static ArbolH buildTree(int[] FrecuenciaCaracteres) {
+        PriorityQueue<ArbolH> trees = new PriorityQueue<ArbolH>();
+        // Inicialmente se tiene un bosque de hojas, una para cada caracter no vacio
+     
+        for (int i = 0; i < FrecuenciaCaracteres.length; i++)
+            if (FrecuenciaCaracteres[i] > 0)
+                trees.offer(new HojaH(FrecuenciaCaracteres[i], (char)i));
+ 
+        assert trees.size() > 0;
+        // Hace un ciclo hasta que solo quede un arbol
+        while (trees.size() > 1) {
+            // Dos arboles con la menor frecuencia
+            ArbolH a = trees.poll();
+            ArbolH b = trees.poll();
+ 
+            // Se pone en un nuevo nodo y se pone en la cola
+            trees.offer(new NodoH(a, b));
+        }
+        return trees.poll();
+    }
+    
+    public static void impresion(ArbolH tree, StringBuffer prefix) {
+        assert tree != null;
+        if (tree instanceof HojaH) {
+            HojaH hoja = (HojaH)tree;
+ 
+            //imprime frecuencia, caracter y el codigo para la hoja, la cual es el prefijo
+            System.out.println(hoja.valor + "\t" + hoja.frecuencia + "\t" + prefix);
+ 
+        } else if (tree instanceof NodoH) {
+            NodoH nodo = (NodoH)tree;
+ 
+            //Izquierda
+            prefix.append('0');
+            impresion(nodo.izquierda, prefix);
+            prefix.deleteCharAt(prefix.length()-1);
+ 
+            //Derecha
+            prefix.append('1');
+            impresion(nodo.derecha, prefix);
+            prefix.deleteCharAt(prefix.length()-1);
+        }
+    }
+ 
+    public static void main(String[] args) {
+    	 String test;
+    	Scanner teclado = new Scanner(System.in);
+    	System.out.println("Ingrese los caracteres: ");
+    	 test = teclado.nextLine();
+    	
+    	
+    	 //Se asume que el string tiene un codigo menor a 256
+        int[] FrecuenciaCaract = new int[256];
+        // Se lee cada carcater y se guarda la frecuencia con la que aparecen
+        for (char c : test.toCharArray())
+        	FrecuenciaCaract[c]++;
+ 
+        //Se construye el arbol
+        ArbolH tree = buildTree(FrecuenciaCaract);
+ 
+        // Impresion
+        System.out.println("Simbolo\tCantidad\tCodigo Huffman");
+        impresion(tree, new StringBuffer());
+    }
+}
