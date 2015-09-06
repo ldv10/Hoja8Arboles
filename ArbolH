@@ -1,0 +1,11 @@
+import java.util.*;
+ 
+abstract class ArbolH implements Comparable<ArbolH> {
+    public final int frecuencia; // Frecuencia del arbol
+    public ArbolH (int freq) { frecuencia = freq; }
+ 
+    //Compara
+    public int compareTo(ArbolH tree) {
+        return frecuencia - tree.frecuencia;
+    }
+}
