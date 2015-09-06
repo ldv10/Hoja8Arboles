@@ -1,0 +1,10 @@
+import java.util.*;
+class NodoH extends ArbolH {
+    public final ArbolH izquierda, derecha; // Subdivision de arboles
+ 
+    public NodoH(ArbolH i, ArbolH d) {
+        super(i.frecuencia + d.frecuencia);
+        izquierda = i;
+        derecha = d;
+    }
+}
