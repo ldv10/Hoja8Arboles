@@ -1,10 +1,35 @@
 import java.util.*;
+
+//Universidad del Valle de Guatemala
+//Algoritmos y estructuras de datos
+//Hoja de trabajo 7
+//Juan Carlos Tapia Flores 14133
+//Leonel Guillen del Valle 14451
+
 class NodoH extends ArbolH {
-    public final ArbolH izquierda, derecha; // Subdivision de arboles
+    private  ArbolH izquierda = null, derecha = null; // Subdivision de arboles
  
     public NodoH(ArbolH i, ArbolH d) {
-        super(i.frecuencia + d.frecuencia);
+        super(i.getFrecuencia() + d.getFrecuencia());
         izquierda = i;
         derecha = d;
     }
+
+	public ArbolH getIzquierda() {
+		return izquierda;
+	}
+
+	public void setIzquierda(ArbolH izquierda) {
+		this.izquierda = izquierda;
+	}
+
+	public ArbolH getDerecha() {
+		return derecha;
+	}
+
+	public void setDerecha(ArbolH derecha) {
+		this.derecha = derecha;
+	}
+    
+    
 }
