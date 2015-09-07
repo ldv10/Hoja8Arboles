@@ -1,9 +1,24 @@
 import java.util.*;
+
+//Universidad del Valle de Guatemala
+//Algoritmos y estructuras de datos
+//Hoja de trabajo 7
+//Juan Carlos Tapia Flores 14133
+//Leonel Guillen del Valle 14451
+
 class HojaH extends ArbolH {
-    public final char valor; //El valor que se representa en la hoja
+    private  char valor; //El valor que se representa en la hoja
  
     public HojaH (int freq, char val) {
         super(freq);
         valor = val;
     }
+
+	public char getValor() {
+		return valor;
+	}
+
+	public void setValor(char valor) {
+		this.valor = valor;
+	}
 }
