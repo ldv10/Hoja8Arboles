@@ -1,8 +1,15 @@
-import java.util.*;
+//Universidad del Valle de Guatemala
+//Algoritmos y estructuras de datos
+//Hoja de trabajo 7
+//Juan Carlos Tapia Flores 14133
+//Leonel Guillen del Valle 14451
+
+import java.util.PriorityQueue;
+import java.util.Scanner;
 
 public class Huffman {
     // Se compone un arreglo de las frecuencias respectivas a los caracteres
-    public static ArbolH buildTree(int[] FrecuenciaCaracteres) {
+    public  ArbolH buildTree(int[] FrecuenciaCaracteres) {
         PriorityQueue<ArbolH> trees = new PriorityQueue<ArbolH>();
         // Inicialmente se tiene un bosque de hojas, una para cada caracter no vacio
      
@@ -23,47 +30,77 @@ public class Huffman {
         return trees.poll();
     }
     
-    public static void impresion(ArbolH tree, StringBuffer prefix) {
+    public  void impresion(ArbolH tree, StringBuffer prefix) {
         assert tree != null;
         if (tree instanceof HojaH) {
             HojaH hoja = (HojaH)tree;
  
             //imprime frecuencia, caracter y el codigo para la hoja, la cual es el prefijo
-            System.out.println(hoja.valor + "\t" + hoja.frecuencia + "\t" + prefix);
+            System.out.println(hoja.getValor() + "\t" + hoja.getFrecuencia() + "\t" + prefix);
  
         } else if (tree instanceof NodoH) {
             NodoH nodo = (NodoH)tree;
  
             //Izquierda
             prefix.append('0');
-            impresion(nodo.izquierda, prefix);
+            impresion(nodo.getIzquierda(), prefix);
             prefix.deleteCharAt(prefix.length()-1);
  
             //Derecha
             prefix.append('1');
-            impresion(nodo.derecha, prefix);
+            impresion(nodo.getDerecha(), prefix);
             prefix.deleteCharAt(prefix.length()-1);
         }
     }
  
-    public static void main(String[] args) {
-    	 String test;
-    	Scanner teclado = new Scanner(System.in);
-    	System.out.println("Ingrese los caracteres: ");
-    	 test = teclado.nextLine();
-    	
-    	
-    	 //Se asume que el string tiene un codigo menor a 256
-        int[] FrecuenciaCaract = new int[256];
-        // Se lee cada carcater y se guarda la frecuencia con la que aparecen
-        for (char c : test.toCharArray())
-        	FrecuenciaCaract[c]++;
- 
-        //Se construye el arbol
-        ArbolH tree = buildTree(FrecuenciaCaract);
- 
-        // Impresion
-        System.out.println("Simbolo\tCantidad\tCodigo Huffman");
-        impresion(tree, new StringBuffer());
-    }
+    
+    public char buscar(ArbolH tree, String[] mensaje, int num){ // Funcion que busca un caracter a base de su codigo.
+    		
+	    	assert tree != null;
+	        if (tree instanceof HojaH) {
+	            HojaH hoja = (HojaH)tree;
+	            
+	            // Revisa si se recorrio la candidad de niveles apropiados para encontrar ese caracter.
+	            if(num == mensaje.length){
+	            	return hoja.getValor();
+	            }
+	            else
+	            {
+	            	return '0';
+	            }
+	            
+	           
+	 
+	        } else if (tree instanceof NodoH) {
+	            NodoH nodo = (NodoH)tree;
+	 
+	           if(mensaje[num].equals("0")){ // Si en el mensaje ingresado se encuentra un 0
+	        	 
+	        	   
+	        	 return buscar(nodo.getIzquierda(),mensaje,num+1);  // Se busca en la rama de la izquierda
+	           }
+	           else{ // Si no, se busca en la de la derecha
+	        	
+	        	   return buscar(nodo.getDerecha(),mensaje,num+1); 
+	        	   
+	           	}
+	        	   
+	           }
+			return 0;
+			
+	        }
+	    
+public String traducir(ArbolH tree, String mensaje){
+		String[] MensajePartido = mensaje.split(" "); // Se separa el mensaje ingresado por el usuario en segmentos para cada letra
+		String MensajeTraducido = ""; // Variable que va guardando los caracteres traducidos
+		for (int i = 0; i < MensajePartido.length; i++){ // Se revisan todos los segmentos creados antes
+			char c =  buscar(tree, MensajePartido[i].split(""), 0); // Se llama a la funcion que busca en el arbol
+			if (c=='0'){ // Si la funcion devolvio 0, es que el caracter no esta en el arbol
+				return "No es un mensaje valido";	
+			}
+			MensajeTraducido = MensajeTraducido + c; // Si no se devolvio 0, se añade el caracter al resultado final
+		}
+		return MensajeTraducido; // Se devuelve el Mensaje Traducido.
+	}
+
 }
