@@ -8,27 +8,24 @@ import java.util.Scanner;
 
 public class IngresoHuffman {
 	 public static void main(String[] args) {
-    	 String test;
     	Scanner teclado = new Scanner(System.in);
-    	Huffman huffman = new Huffman();
+    	Huffman huffman = new Huffman(); // Se crea objeto de la clase Huffman
     	
+    	// Se ingresan los caracteres para frecuencia
     	System.out.println("Ingrese los caracteres: ");
-    	 test = teclado.nextLine();
+    	String ingreso = teclado.nextLine();
     	
     	
-    	 //Se asume que el string tiene un codigo menor a 256
-        int[] FrecuenciaCaract = new int[256];
-        // Se lee cada carcater y se guarda la frecuencia con la que aparecen
-        for (char c : test.toCharArray())
-        	FrecuenciaCaract[c]++;
- 
+    	 
+    	 huffman.CalcularFrecuencias(ingreso);
         //Se construye el arbol
-        ArbolH tree = huffman.buildTree(FrecuenciaCaract);
+        ArbolH tree = huffman.HacerArbol();
  
         // Impresion
-        System.out.println("Simbolo\tCantidad\tCodigo Huffman");
-        huffman.impresion(tree, new StringBuffer());
+        System.out.println("Simbolo   Cantidad   Codigo Huffman");
+        huffman.Codificar(tree, new StringBuffer());
         
+        // Traduccion
         System.out.println("Ingrese el mensaje que desea traducir, se pare el codigo de cada caracter con ' ': ");
    	 	String mensaje = teclado.nextLine();
    	 	
