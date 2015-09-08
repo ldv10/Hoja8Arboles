@@ -78,7 +78,6 @@ public class Huffman {
     
     public char buscar(ArbolH arbol, String[] mensaje, int num){ // Funcion que busca un caracter a base de su codigo.
     		
-	    	//assert tree != null;
 	    	
 	        if (arbol instanceof HojaH) {
 	            HojaH hoja = (HojaH)arbol;
