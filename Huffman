@@ -5,60 +5,83 @@
 //Leonel Guillen del Valle 14451
 
 import java.util.PriorityQueue;
-import java.util.Scanner;
 
+// Esta clase se encarga de crear el arbol de Huffman, y de traducir mensajes que se ingresen usando su codificacion.
 public class Huffman {
+	
+	private int[] FrecuenciaCaract = new int[256]; // Este arreglo cuenta la frequencia de caraceres.
+	
+	
+	 public Huffman() {
+	
+	 }
+	// Se lee cada carcater y se guarda la frecuencia con la que aparecen
+	public void CalcularFrecuencias(String ingreso){ 
+        for (char c : ingreso.toCharArray())
+        	FrecuenciaCaract[c]++;
+		
+	}
     // Se compone un arreglo de las frecuencias respectivas a los caracteres
-    public  ArbolH buildTree(int[] FrecuenciaCaracteres) {
+    
+	
+	
+	
+	
+	
+	public  ArbolH HacerArbol() {
         PriorityQueue<ArbolH> trees = new PriorityQueue<ArbolH>();
         // Inicialmente se tiene un bosque de hojas, una para cada caracter no vacio
      
-        for (int i = 0; i < FrecuenciaCaracteres.length; i++)
-            if (FrecuenciaCaracteres[i] > 0)
-                trees.offer(new HojaH(FrecuenciaCaracteres[i], (char)i));
+        for (int i = 0; i < FrecuenciaCaract.length; i++) // Se revisan todos los caracteres y se ingresa su frquencia a la priority Queue
+            if (FrecuenciaCaract[i] > 0)
+                trees.offer(new HojaH(FrecuenciaCaract[i], (char)i));
  
-        assert trees.size() > 0;
+        
         // Hace un ciclo hasta que solo quede un arbol
         while (trees.size() > 1) {
             // Dos arboles con la menor frecuencia
-            ArbolH a = trees.poll();
+            ArbolH a = trees.poll(); 
             ArbolH b = trees.poll();
  
-            // Se pone en un nuevo nodo y se pone en la cola
+            // Se pone en un nuevo nodo el cual es un arbol con los arboles anteriores como hijos, y se pone en la cola
             trees.offer(new NodoH(a, b));
         }
-        return trees.poll();
+        return trees.poll(); // Se devuelve el arbol final.
     }
     
-    public  void impresion(ArbolH tree, StringBuffer prefix) {
-        assert tree != null;
-        if (tree instanceof HojaH) {
-            HojaH hoja = (HojaH)tree;
+	// Funcion que recorre el arbol para codificar los caracteres
+    public  void Codificar(ArbolH arbol, StringBuffer buffer) {	
+    	
+        if (arbol instanceof HojaH) { // SE revisa si se llego a una hoja.
+            HojaH hoja = (HojaH)arbol;
  
             //imprime frecuencia, caracter y el codigo para la hoja, la cual es el prefijo
-            System.out.println(hoja.getValor() + "\t" + hoja.getFrecuencia() + "\t" + prefix);
+            System.out.println(hoja.getValor() + "\t" + hoja.getFrecuencia() + "\t" + buffer);
  
-        } else if (tree instanceof NodoH) {
-            NodoH nodo = (NodoH)tree;
+        } else if (arbol instanceof NodoH) { // Si no revisa si el arbol tiene hijos.
+            NodoH nodo = (NodoH)arbol;
  
-            //Izquierda
-            prefix.append('0');
-            impresion(nodo.getIzquierda(), prefix);
-            prefix.deleteCharAt(prefix.length()-1);
+            
+            // La funcion recursiva permite que se recrra todo el arbol, y se haga la impresion de todas las hojas.
+            //Se revisa el lado izquierdo, y se llama de nuevo a la funcion para buscar un caracter.
+            buffer.append('0');
+            Codificar(nodo.getIzquierda(), buffer);
+            buffer.deleteCharAt(buffer.length()-1);
  
-            //Derecha
-            prefix.append('1');
-            impresion(nodo.getDerecha(), prefix);
-            prefix.deleteCharAt(prefix.length()-1);
+          //Se revisa el lado derecho, y se llama de nuevo a la funcion para buscar un caracter.
+            buffer.append('1');
+            Codificar(nodo.getDerecha(), buffer);
+            buffer.deleteCharAt(buffer.length()-1);
         }
     }
  
     
-    public char buscar(ArbolH tree, String[] mensaje, int num){ // Funcion que busca un caracter a base de su codigo.
+    public char buscar(ArbolH arbol, String[] mensaje, int num){ // Funcion que busca un caracter a base de su codigo.
     		
-	    	assert tree != null;
-	        if (tree instanceof HojaH) {
-	            HojaH hoja = (HojaH)tree;
+	    	//assert tree != null;
+	    	
+	        if (arbol instanceof HojaH) {
+	            HojaH hoja = (HojaH)arbol;
 	            
 	            // Revisa si se recorrio la candidad de niveles apropiados para encontrar ese caracter.
 	            if(num == mensaje.length){
@@ -71,9 +94,10 @@ public class Huffman {
 	            
 	           
 	 
-	        } else if (tree instanceof NodoH) {
-	            NodoH nodo = (NodoH)tree;
-	 
+	        } else if (arbol instanceof NodoH) {
+	            NodoH nodo = (NodoH)arbol;
+	            
+	            if  ((num < mensaje.length)){
 	           if(mensaje[num].equals("0")){ // Si en el mensaje ingresado se encuentra un 0
 	        	 
 	        	   
@@ -86,15 +110,17 @@ public class Huffman {
 	           	}
 	        	   
 	           }
-			return 0;
+	    	}
+			return '0';
 			
 	        }
 	    
-public String traducir(ArbolH tree, String mensaje){
+    // Funcion que traduce un mensaje ingresado por el usuario, o indica que no se puede traducir.
+    public String traducir(ArbolH arbol, String mensaje){
 		String[] MensajePartido = mensaje.split(" "); // Se separa el mensaje ingresado por el usuario en segmentos para cada letra
 		String MensajeTraducido = ""; // Variable que va guardando los caracteres traducidos
 		for (int i = 0; i < MensajePartido.length; i++){ // Se revisan todos los segmentos creados antes
-			char c =  buscar(tree, MensajePartido[i].split(""), 0); // Se llama a la funcion que busca en el arbol
+			char c =  buscar(arbol, MensajePartido[i].split(""), 0); // Se llama a la funcion que busca en el arbol
 			if (c=='0'){ // Si la funcion devolvio 0, es que el caracter no esta en el arbol
 				return "No es un mensaje valido";	
 			}
