@@ -6,14 +6,19 @@ import java.util.*;
 //Juan Carlos Tapia Flores 14133
 //Leonel Guillen del Valle 14451
 
-class HojaH extends ArbolH {
+
+//Esta clase se encarga de representar un arbol que no tiene hijos.
+public class HojaH extends ArbolH {
     private  char valor; //El valor que se representa en la hoja
  
-    public HojaH (int freq, char val) {
-        super(freq);
+ 	// Constructor
+    public HojaH (int frequencia, char val) {
+        super(frequencia);
         valor = val;
     }
-
+    
+    
+// Getters y Setters
 	public char getValor() {
 		return valor;
 	}
@@ -21,4 +26,6 @@ class HojaH extends ArbolH {
 	public void setValor(char valor) {
 		this.valor = valor;
 	}
+
+	
 }
