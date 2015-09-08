@@ -6,6 +6,7 @@
 
 
 //Esta clase se encarga de representar un arbol, pero solo guarda la frequencia del caracter que representa
+// Sus clases hijas se encargan de indicar si es una hoja o no, puesto a que el valor guardado es diferente en ambas.
 public class ArbolH implements Comparable<ArbolH> { // Implementa Comparable para que se pueda usar la Priority Queue.
     private  int frecuencia; // Frecuencia del arbol
     
