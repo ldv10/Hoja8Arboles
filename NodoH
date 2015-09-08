@@ -1,20 +1,23 @@
 import java.util.*;
-
 //Universidad del Valle de Guatemala
 //Algoritmos y estructuras de datos
 //Hoja de trabajo 7
 //Juan Carlos Tapia Flores 14133
 //Leonel Guillen del Valle 14451
 
-class NodoH extends ArbolH {
-    private  ArbolH izquierda = null, derecha = null; // Subdivision de arboles
- 
-    public NodoH(ArbolH i, ArbolH d) {
-        super(i.getFrecuencia() + d.getFrecuencia());
-        izquierda = i;
-        derecha = d;
-    }
 
+// Esta clase se encarga de representar un arbol que si tiene hijos.
+public class NodoH extends ArbolH {
+    private ArbolH izquierda = null;
+    private	ArbolH	derecha = null; 
+ 
+    // Construcctor
+    public NodoH(ArbolH izq, ArbolH der) {
+        super(izq.getFrecuencia() + der.getFrecuencia());
+        izquierda = izq;
+        derecha = der;
+    }
+     // SEtters y Getters
 	public ArbolH getIzquierda() {
 		return izquierda;
 	}
