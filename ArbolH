@@ -1,8 +1,15 @@
-import java.util.*;
- 
-abstract class ArbolH implements Comparable<ArbolH> {
+//Universidad del Valle de Guatemala
+//Algoritmos y estructuras de datos
+//Hoja de trabajo 7
+//Juan Carlos Tapia Flores 14133
+//Leonel Guillen del Valle 14451
+
+
+//Esta clase se encarga de representar un arbol, pero solo guarda la frequencia del caracter que representa
+public class ArbolH implements Comparable<ArbolH> { // Implementa Comparable para que se pueda usar la Priority Queue.
     private  int frecuencia; // Frecuencia del arbol
     
+    // Getters y Setters
     public int getFrecuencia() {
 		return frecuencia;
 	}
@@ -10,14 +17,14 @@ abstract class ArbolH implements Comparable<ArbolH> {
 	public void setFrecuencia(int frecuencia) {
 		this.frecuencia = frecuencia;
 	}
-
+	
+	// Constructor
 	public ArbolH (int freq) { 
     	frecuencia = freq;
     	}
  
-    //Compara
-    public int compareTo(ArbolH tree) {
-        return frecuencia - tree.frecuencia;
+    //Compara si la frequencia de dos arboles son iguales
+   public int compareTo(ArbolH arbol) { // Este 
+        return frecuencia - arbol.frecuencia;
     }
 }
-
