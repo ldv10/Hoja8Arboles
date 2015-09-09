@@ -1,0 +1,52 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+
+public class HojaHTest {
+    
+    public HojaHTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    /**
+     * Test of getValor method, of class HojaH.
+     */
+    @Test
+    public void testGetValor() {
+        System.out.println("getValor");
+        HojaH instance = null;
+        char expResult = ' ';
+        //char result = instance.getValor();
+        //assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setValor method, of class HojaH.
+     */
+    @Test
+    public void testSetValor() {
+        System.out.println("setValor");
+        char valor = ' ';
+        HojaH instance = null;
+        //instance.setValor(valor);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+    
+}
